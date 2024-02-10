@@ -10,9 +10,9 @@ function Unique() {
     setCopied(true);
     setTimeout(() => {
       setCopied(false);
-    }, 3000); // Hide success message after 3 seconds
+    }, 1500);
   };
-  const uniqueLink = "https://www.example.com/your-unique-link";
+  const uniqueLink = localStorage.getItem("uniqueLink");
   return (
     <Stack spacing={2}>
       <Typography>Your unique link is:</Typography>

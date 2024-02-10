@@ -14,12 +14,12 @@ function App() {
       <Router>
         <Routes>
           <Route
-            path="/"
-            element={<SignUp login={login} setLogin={setLogin} />}
+            path="/main:userId"
+            element={<Main login={login} setLogin={setLogin} />}
           />
           <Route
-            path="/main"
-            element={<Main login={login} setLogin={setLogin} />}
+            path="/"
+            element={<SignUp login={login} setLogin={setLogin} />}
           />
           <Route path="/unique" element={<Unique />} />
         </Routes>

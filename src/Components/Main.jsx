@@ -18,7 +18,7 @@ function Main({ login }) {
     setCopied(true);
     setTimeout(() => {
       setCopied(false);
-    }, 3000); // Hide success message after 3 seconds
+    }, 1500);
   };
   const uniqueLink = "https://www.example.com/your-unique-link1";
   return (
