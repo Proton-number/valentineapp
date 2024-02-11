@@ -16,8 +16,7 @@ function Main({ login }) {
   const [copied, setCopied] = useState(false);
   const { userId } = useParams();
   const userEmail = localStorage.getItem("userId");
-
-
+  const userName = localStorage.getItem("userName");
 
   const handleCopy = () => {
     setCopied(true);
@@ -27,16 +26,18 @@ function Main({ login }) {
   };
 
   const sendEmail = (response) => {
-    const message = `User clicked ${response === "Yes" ? "Yes" : "No"}`;
+    const message = `Your lover clicked: ${response === "Yes" ? "Yes" : "No"}`;
     emailjs
       .send(
         "service_4yekg28",
         "template_b84gc6f",
         {
+          to_name: userName,
+          from_name: "the Love Of Your Life",
           to_email: userEmail,
-          message: message, // Include the constructed message
+          message: message,
         },
-        "t109mLgRKENh6e3Ch",
+        "t109mLgRKENh6e3Ch"
       )
       .then((response) => {
         console.log("Email sent successfully:", response);

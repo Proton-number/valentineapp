@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignUp from "./Components/SignUp";
 import Main from "./Components/Main";
 import Unique from "./Components/Unique";
-import { useLocalStorage } from "@uidotdev/usehooks";
 
 function App() {
   const [login, setLogin] = useState(localStorage.getItem("loggedIn"));
