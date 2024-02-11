@@ -1,5 +1,5 @@
-import { Paper, Box, Stack, Button, Typography } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import { Paper, Box, Button, Typography } from "@mui/material";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "../FirebaseConfig/firebase";

@@ -11,6 +11,7 @@ import { Link, useParams } from "react-router-dom";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import emailjs from "@emailjs/browser";
+import Gif from "./Gif";
 
 function Main({ login }) {
   const [copied, setCopied] = useState(false);
@@ -51,6 +52,7 @@ function Main({ login }) {
   return (
     <Box>
       <Stack spacing={2}>
+        <Gif />
         <Typography variant="h2">Will you be my Valentine?</Typography>
         <Stack
           direction="row"
@@ -59,10 +61,23 @@ function Main({ login }) {
           }}
           spacing={2}
         >
-          <Button variant="contained" onClick={() => sendEmail("Yes")}>
+          <Button
+            sx={{
+              backgroundColor: "hsl(145, 54%, 48%)",
+              "&:hover": {
+                backgroundColor: "hsl(148, 100%, 26%)",
+              },
+            }}
+            variant="contained"
+            onClick={() => sendEmail("Yes")}
+          >
             Yes
           </Button>
-          <Button variant="contained" onClick={() => sendEmail("No")}>
+          <Button
+            color="error"
+            variant="contained"
+            onClick={() => sendEmail("No")}
+          >
             {" "}
             No
           </Button>
