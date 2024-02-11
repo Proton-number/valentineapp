@@ -7,12 +7,13 @@ import {
   IconButton,
   Tooltip,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-
+import emailjs from "@emailjs/browser";
 function Main({ login }) {
   const [copied, setCopied] = useState(false);
+  const { userId } = useParams();
 
   const handleCopy = () => {
     setCopied(true);
@@ -20,7 +21,29 @@ function Main({ login }) {
       setCopied(false);
     }, 1500);
   };
-  const uniqueLink = "https://www.example.com/your-unique-link1";
+
+  const sendEmail = (response) => {
+    const message = `User clicked ${response === "Yes" ? "Yes" : "No"}`;
+    emailjs
+      .send(
+        "YOUR_SERVICE_ID",
+        "YOUR_TEMPLATE_ID",
+        {
+          to_name: "Recipient Name", // You can dynamically fill in this data
+          from_name: "Your Name", // You can dynamically fill in this data
+          message: message, // Include the constructed message
+        },
+        "YOUR_USER_ID"
+      )
+      .then((response) => {
+        console.log("Email sent successfully:", response);
+      })
+      .catch((error) => {
+        console.error("Email sending failed:", error);
+      });
+  };
+
+  const uniqueLink = localStorage.getItem("uniqueLink");
   return (
     <Box>
       <Stack spacing={2}>
@@ -32,8 +55,13 @@ function Main({ login }) {
           }}
           spacing={2}
         >
-          <Button variant="contained">Yes</Button>
-          <Button variant="contained"> No</Button>
+          <Button variant="contained" onClick={() => sendEmail("Yes")}>
+            Yes
+          </Button>
+          <Button variant="contained" onClick={() => sendEmail("No")}>
+            {" "}
+            No
+          </Button>
         </Stack>
 
         <Typography variant="body1" sx={{ cursor: "pointer" }}>

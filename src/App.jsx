@@ -14,7 +14,7 @@ function App() {
       <Router>
         <Routes>
           <Route
-            path="/main:userId"
+            path="/main/:userId"
             element={<Main login={login} setLogin={setLogin} />}
           />
           <Route
