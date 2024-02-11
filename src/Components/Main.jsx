@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Stack,
@@ -11,9 +11,13 @@ import { Link, useParams } from "react-router-dom";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import emailjs from "@emailjs/browser";
+
 function Main({ login }) {
   const [copied, setCopied] = useState(false);
   const { userId } = useParams();
+  const userEmail = localStorage.getItem("userId");
+
+
 
   const handleCopy = () => {
     setCopied(true);
@@ -26,14 +30,13 @@ function Main({ login }) {
     const message = `User clicked ${response === "Yes" ? "Yes" : "No"}`;
     emailjs
       .send(
-        "YOUR_SERVICE_ID",
-        "YOUR_TEMPLATE_ID",
+        "service_4yekg28",
+        "template_b84gc6f",
         {
-          to_name: "Recipient Name", // You can dynamically fill in this data
-          from_name: "Your Name", // You can dynamically fill in this data
+          to_email: userEmail,
           message: message, // Include the constructed message
         },
-        "YOUR_USER_ID"
+        "t109mLgRKENh6e3Ch",
       )
       .then((response) => {
         console.log("Email sent successfully:", response);
