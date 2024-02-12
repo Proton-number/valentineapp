@@ -21,14 +21,14 @@ function Unique() {
         {!copied && (
           <CopyToClipboard text={uniqueLink} onCopy={handleCopy}>
             <IconButton>
-              <ContentCopyIcon sx={{ color: "white" }} />
+              <ContentCopyIcon sx={{ color: "black" }} />
             </IconButton>
           </CopyToClipboard>
         )}
         {copied && (
           <Tooltip title="Link copied!" open={copied}>
             <IconButton disabled>
-              <ContentCopyIcon sx={{ color: "white", opacity: 0.8 }} />
+              <ContentCopyIcon sx={{ color: "black", opacity: 0.8 }} />
             </IconButton>
           </Tooltip>
         )}

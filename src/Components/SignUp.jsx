@@ -18,7 +18,7 @@ function SignUp({ setLogin }) {
         setLogin(true);
         // Generate unique link after successful login
         const encodedUserId = btoa(user.uid);
-        const link = `http://localhost:5173/main/user=${encodedUserId}`;
+        const link = `https://falentine.netlify.app/main/user=${encodedUserId}`;
         localStorage.setItem("uniqueLink", link);
         setUniqueLink(link);
 
@@ -31,7 +31,7 @@ function SignUp({ setLogin }) {
 
   return (
     <Box>
-      <Paper sx={{ padding: "30px" }}>
+      <Paper sx={{ padding: "30px" }} elevation={8}>
         <Button variant="contained" onClick={signUpHandler}>
           Login with Google
         </Button>
