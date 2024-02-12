@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Stack,
@@ -18,7 +18,6 @@ import Gif from "./Gif";
 function Main({ login }) {
   const [copied, setCopied] = useState(false);
   const { userId } = useParams();
-  const userEmail = localStorage.getItem("userId");
   const userName = localStorage.getItem("userName");
   const [happy, setHappy] = useState(false);
   const [sad, setSad] = useState(false);
@@ -38,6 +37,7 @@ function Main({ login }) {
   });
 
   const sendEmail = (response) => {
+    const userEmail = localStorage.getItem("userEmail");
     const message = `Your lover clicked: ${response === "Yes" ? "Yes" : "No"}`;
     emailjs
       .send(
