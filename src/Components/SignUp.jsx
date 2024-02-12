@@ -14,12 +14,12 @@ function SignUp({ setLogin }) {
       await signInWithPopup(auth, googleProvider).then((res) => {
         const user = res.user;
         localStorage.setItem("loggedIn", true);
-       localStorage.setItem("userEmail", user.email); 
+        localStorage.setItem("userEmail", user.email);
         localStorage.setItem("userName", user.displayName);
         setLogin(true);
         // Generate unique link after successful login
         const encodedUserId = btoa(user.uid);
-        const link = `http://localhost:5173/main/user=${encodedUserId}`;
+        const link = `https://falentine.netlify.app/main/user=${encodedUserId}`;
         localStorage.setItem("uniqueLink", link);
         setUniqueLink(link);
 
