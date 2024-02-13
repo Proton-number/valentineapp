@@ -23,6 +23,15 @@ function Main({ login }) {
   const [sad, setSad] = useState(false);
   const [gif, setGif] = useState(true);
 
+  const [userEmail, setUserEmail] = useState("");
+  useEffect(() => {
+    // Fetch the currently authenticated user's email from Firebase Authentication
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      setUserEmail(currentUser.email);
+    }
+  }, []);
+
   const handleCopy = () => {
     setCopied(true);
     setTimeout(() => {
@@ -37,7 +46,7 @@ function Main({ login }) {
   });
 
   const sendEmail = (response) => {
-    const userEmail = localStorage.getItem("userEmail");
+    // const userEmail = localStorage.getItem("userEmail");
     const message = `Your lover clicked: ${response === "Yes" ? "Yes" : "No"}`;
     emailjs
       .send(
