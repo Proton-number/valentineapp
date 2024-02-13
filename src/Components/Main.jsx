@@ -14,6 +14,7 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import emailjs from "@emailjs/browser";
 import Gif from "./Gif";
+import { auth } from "../FirebaseConfig/firebase";
 
 function Main({ login }) {
   const [copied, setCopied] = useState(false);
