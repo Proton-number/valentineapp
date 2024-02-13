@@ -17,13 +17,7 @@ function SignUp({ setLogin }) {
         localStorage.setItem("userEmail", user.email);
         localStorage.setItem("userName", user.displayName);
         setLogin(true);
-        // Generate unique link after successful login
-        const encodedUserId = btoa(user.uid);
-        const link = `https://falentine.netlify.app/main/user=${encodedUserId}`;
-        localStorage.setItem("uniqueLink", link);
-        setUniqueLink(link);
-
-        navigate(`/main?user=${encodedUserId}`);
+        navigate(`/main/user=${user.uid}`);
       });
     } catch (err) {
       console.log(err);
@@ -32,8 +26,8 @@ function SignUp({ setLogin }) {
 
   return (
     <Box>
-      <Paper sx={{ padding: "30px" }} elevation={8}>
-        <Box sx={{ cursor: "pointer" }} onClick={signUpHandler}>
+      <Paper sx={{ padding: "30px" }} elevation={8} onClick={signUpHandler}>
+        <Box sx={{ cursor: "pointer" }}>
           <Stack direction="row" sx={{ alignItems: "center" }} spacing={2}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
