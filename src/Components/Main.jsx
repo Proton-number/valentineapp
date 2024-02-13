@@ -41,15 +41,15 @@ function Main({ login }) {
     const message = `Your lover clicked: ${response === "Yes" ? "Yes" : "No"}`;
     emailjs
       .send(
-        "service_4yekg28",
-        "template_b84gc6f",
+        "service_ack0iqk",
+        "template_7l59kvk",
         {
           to_name: userName,
           from_name: "the Love Of Your Life",
           to_email: userEmail,
           message: message,
         },
-        "t109mLgRKENh6e3Ch"
+        "ztBK844ely_XQ_9hh"
       )
       .then((response) => {
         console.log("Email sent successfully:", response);
@@ -57,6 +57,15 @@ function Main({ login }) {
       .catch((error) => {
         console.error("Email sending failed:", error);
       });
+  };
+
+  const breakLongURL = (url) => {
+    const maxLength = 40; // Set the maximum length for each line
+    const parts = [];
+    for (let i = 0; i < url.length; i += maxLength) {
+      parts.push(url.substring(i, i + maxLength));
+    }
+    return parts.join("\n");
   };
 
   const uniqueLink = localStorage.getItem("uniqueLink");
@@ -117,7 +126,7 @@ function Main({ login }) {
               }}
               spacing={2}
             >
-              <Typography>{uniqueLink}</Typography>
+              <Typography>{breakLongURL(uniqueLink)}</Typography>
               {!copied && (
                 <CopyToClipboard text={uniqueLink} onCopy={handleCopy}>
                   <IconButton>
