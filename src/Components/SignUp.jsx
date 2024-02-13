@@ -23,7 +23,7 @@ function SignUp({ setLogin }) {
         localStorage.setItem("uniqueLink", link);
         setUniqueLink(link);
 
-        navigate("/unique");
+        navigate(`/main?user=${encodedUserId}`);
       });
     } catch (err) {
       console.log(err);
