@@ -1,160 +1,112 @@
-import React, { useState, useEffect } from "react";
+import { useState } from 'react';
 import {
   Box,
   Stack,
   Button,
   Typography,
-  IconButton,
-  Tooltip,
   createTheme,
   ThemeProvider,
-} from "@mui/material";
-import { Link, useParams } from "react-router-dom";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import emailjs from "@emailjs/browser";
-import Gif from "./Gif";
-import { auth } from "../FirebaseConfig/firebase";
+} from '@mui/material';
+import { Link, useParams } from 'react-router-dom';
+import Gif from './ui/Gif';
+import CopyLink from './ui/CopyLink';
+import { useAuth } from '../contexts/AuthContext';
+import emailjs from '@emailjs/browser';
 
-function Main({ login }) {
-  const [copied, setCopied] = useState(false);
+function Main() {
   const { userId } = useParams();
-  const userName = localStorage.getItem("userName");
-  const [happy, setHappy] = useState(false);
-  const [sad, setSad] = useState(false);
-  const [gif, setGif] = useState(true);
+  const { user, login } = useAuth();
 
-  const [userEmail, setUserEmail] = useState("");
-  useEffect(() => {
-    // Fetch the currently authenticated user's email from Firebase Authentication
-    const currentUser = auth.currentUser;
-    if (currentUser) {
-      setUserEmail(currentUser.email);
-    }
-  }, []);
+  const [emotionalState, setEmotionalState] = useState({
+    happy: false,
+    sad: false,
+    gif: true,
+  });
 
-  const handleCopy = () => {
-    setCopied(true);
-    setTimeout(() => {
-      setCopied(false);
-    }, 1500);
-  };
-  const uniqueLink = `https://falentine.netlify.app/main/user=${userId}`;
+  const { happy, sad, gif } = emotionalState;
+
   const font = createTheme({
     typography: {
-      fontFamily: "Dancing Script, cursive",
+      fontFamily: 'Dancing Script, cursive',
     },
   });
 
   const sendEmail = (response) => {
-    // const userEmail = localStorage.getItem("userEmail");
-    const message = `Your lover clicked: ${response === "Yes" ? "Yes" : "No"}`;
+    const userEmail = user?.email;
+    const userName = user?.name;
+    const message = `Your lover clicked: ${response === 'Yes' ? 'Yes' : 'No'}`;
+
     emailjs
       .send(
-        "service_ack0iqk",
-        "template_7l59kvk",
+        'service_ack0iqk',
+        'template_7l59kvk',
         {
           to_name: userName,
-          from_name: "the Love Of Your Life",
+          from_name: 'the Love Of Your Life',
           to_email: userEmail,
-          message: message,
+          message,
         },
-        "ztBK844ely_XQ_9hh"
+        'ztBK844ely_XQ_9hh'
       )
       .then((response) => {
-        console.log("Email sent successfully:", response);
+        console.log('Email sent successfully:', response);
       })
       .catch((error) => {
-        console.error("Email sending failed:", error);
+        console.error('Email sending failed:', error);
       });
   };
 
-  const breakLongURL = (url) => {
-    const maxLength = 40; // Set the maximum length for each line
-    const parts = [];
-    for (let i = 0; i < url.length; i += maxLength) {
-      parts.push(url.substring(i, i + maxLength));
-    }
-    return parts.join("\n");
+  const handleButtonClick = (response) => {
+    setEmotionalState({
+      happy: response === 'Yes',
+      sad: response === 'No',
+      gif: false,
+    });
+
+    sendEmail(response);
   };
 
-  // const uniqueLink = localStorage.getItem("uniqueLink");
   return (
     <Box>
       <Stack spacing={2}>
         <Gif sad={sad} happy={happy} gif={gif} />
         <ThemeProvider theme={font}>
-          <Typography variant="h2">Will you be my Valentine?</Typography>
+          <Typography variant='h2'>Will you be my Valentine?</Typography>
         </ThemeProvider>
         <Stack
-          direction="row"
+          direction='row'
           sx={{
-            justifyContent: "center",
+            justifyContent: 'center',
           }}
           spacing={2}
         >
           <Button
             sx={{
-              backgroundColor: "hsl(145, 54%, 48%)",
-              "&:hover": {
-                backgroundColor: "hsl(148, 100%, 26%)",
+              backgroundColor: 'hsl(145, 54%, 48%)',
+              '&:hover': {
+                backgroundColor: 'hsl(148, 100%, 26%)',
               },
             }}
-            variant="contained"
-            onClick={() => {
-              setHappy(true);
-              setSad(false);
-              setGif(false);
-              sendEmail("Yes");
-            }}
+            variant='contained'
+            onClick={() => handleButtonClick('Yes')}
           >
             Yes
           </Button>
           <Button
-            color="error"
-            variant="contained"
-            onClick={() => {
-              sendEmail("No");
-              setSad(true);
-              setGif(false);
-              setHappy(false);
-            }}
+            color='error'
+            variant='contained'
+            onClick={() => handleButtonClick('No')}
           >
-            {" "}
             No
           </Button>
         </Stack>
 
-        <Typography variant="body1" sx={{ cursor: "pointer" }}>
-          <b>Unique Link:</b>{" "}
+        <Typography variant='body1' sx={{ cursor: 'pointer' }}>
           {login ? (
-            <Stack
-              direction="row"
-              sx={{
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              spacing={2}
-            >
-              <Typography>{breakLongURL(uniqueLink)}</Typography>
-              {!copied && (
-                <CopyToClipboard text={uniqueLink} onCopy={handleCopy}>
-                  <IconButton>
-                    <ContentCopyIcon sx={{ color: "black" }} />
-                  </IconButton>
-                </CopyToClipboard>
-              )}
-              {copied && (
-                <Tooltip title="Link copied!" open={copied}>
-                  <IconButton disabled>
-                    <ContentCopyIcon sx={{ color: "black", opacity: 0.8 }} />
-                  </IconButton>
-                </Tooltip>
-              )}
-            </Stack>
+            <CopyLink userId={userId} />
           ) : (
-            <Link to="/">
-              <Box sx={{ color: "black" }}>Click here to get your link</Box>
+            <Link to='/'>
+              <Box sx={{ color: 'black' }}>Click here to get your link</Box>
             </Link>
           )}
         </Typography>
