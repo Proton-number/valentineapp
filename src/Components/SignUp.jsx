@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 function SignUp({ setLogin }) {
   const navigate = useNavigate();
-  const [uniqueLink, setUniqueLink] = useState("");
+  // const [uniqueLink, setUniqueLink] = useState("");
 
   const signUpHandler = async () => {
     try {

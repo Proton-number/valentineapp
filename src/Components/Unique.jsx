@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Stack, Typography, IconButton, Tooltip, Box } from "@mui/material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { useParams } from "react-router-dom";
 
-function Unique({ userId }) {
+function Unique() {
   const [copied, setCopied] = useState(false);
+  const { userId } = useParams();
 
   const handleCopy = () => {
     setCopied(true);
@@ -12,21 +14,16 @@ function Unique({ userId }) {
       setCopied(false);
     }, 1500);
   };
+  const uniqueLink = `https://falentine.netlify.app/main/user=${userId}`;
 
-  const generateUniqueLink = (userId) => {
-    return `https://falentine.netlify.app/main/user=${userId}`;
+  const breakLongURL = (url) => {
+    const maxLength = 40; // Set the maximum length for each line
+    const parts = [];
+    for (let i = 0; i < url.length; i += maxLength) {
+      parts.push(url.substring(i, i + maxLength));
+    }
+    return parts.join("\n");
   };
-
-  const uniqueLink = generateUniqueLink(userId);
-
-  // const breakLongURL = (url) => {
-  //   const maxLength = 40; // Set the maximum length for each line
-  //   const parts = [];
-  //   for (let i = 0; i < url.length; i += maxLength) {
-  //     parts.push(url.substring(i, i + maxLength));
-  //   }
-  //   return parts.join("\n");
-  // };
 
   return (
     <Stack spacing={2}>
@@ -35,9 +32,8 @@ function Unique({ userId }) {
       </Typography>
 
       <Stack direction="row" spacing={1.2} sx={{ alignItems: "center" }}>
-
         <Box>
-          <Typography> {uniqueLink}</Typography>
+          <Typography> {breakLongURL(uniqueLink)}</Typography>
         </Box>
         {!copied && (
           <CopyToClipboard text={uniqueLink} onCopy={handleCopy}>

@@ -29,7 +29,7 @@ function Main({ login }) {
       setCopied(false);
     }, 1500);
   };
-
+  const uniqueLink = `https://falentine.netlify.app/main/user=${userId}`;
   const font = createTheme({
     typography: {
       fontFamily: "Dancing Script, cursive",
@@ -68,7 +68,7 @@ function Main({ login }) {
     return parts.join("\n");
   };
 
-  const uniqueLink = localStorage.getItem("uniqueLink");
+  // const uniqueLink = localStorage.getItem("uniqueLink");
   return (
     <Box>
       <Stack spacing={2}>
