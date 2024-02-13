@@ -14,7 +14,7 @@ function SignUp({ setLogin }) {
       await signInWithPopup(auth, googleProvider).then((res) => {
         const user = res.user;
         localStorage.setItem("loggedIn", true);
-        localStorage.setItem("userEmail", user.email);
+        // localStorage.setItem("userEmail", user.email);
         localStorage.setItem("userName", user.displayName);
         setLogin(true);
         navigate(`/main/user=${user.uid}`);

@@ -37,7 +37,7 @@ function Main({ login }) {
   });
 
   const sendEmail = (response) => {
-    const userEmail = localStorage.getItem("userEmail");
+    const userEmail = user.email;
     const message = `Your lover clicked: ${response === "Yes" ? "Yes" : "No"}`;
     emailjs
       .send(
@@ -68,7 +68,6 @@ function Main({ login }) {
     return parts.join("\n");
   };
 
-  // const uniqueLink = localStorage.getItem("uniqueLink");
   return (
     <Box>
       <Stack spacing={2}>
