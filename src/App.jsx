@@ -1,29 +1,21 @@
-import { useState } from "react";
-import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import SignUp from "./Components/SignUp";
-import Main from "./Components/Main";
-import Unique from "./Components/Unique";
+import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import SignUp from './components/SignUp';
+import Main from './components/Main';
+import Unique from './components/Unique';
+import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
-  const [login, setLogin] = useState(localStorage.getItem("loggedIn"));
-
   return (
-    <>
+    <AuthProvider>
       <Router>
         <Routes>
-          <Route
-            path="/main/:userId"
-            element={<Main login={login} setLogin={setLogin} />}
-          />
-          <Route
-            path="/"
-            element={<SignUp login={login} setLogin={setLogin} />}
-          />
-          <Route path="/unique/:userId" element={<Unique />} />
+          <Route path='/main/:userId' element={<Main />} />
+          <Route path='/' element={<SignUp />} />
+          <Route path='/unique/:userId' element={<Unique />} />
         </Routes>
       </Router>
-    </>
+    </AuthProvider>
   );
 }
 
